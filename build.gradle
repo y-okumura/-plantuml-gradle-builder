@@ -1,0 +1,28 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath group: 'net.sourceforge.plantuml', name: 'plantuml', version: '1.2018.12'
+    }
+}
+
+defaultTasks 'convert'
+
+task copy(type: Copy) {
+  from 'src'
+  into 'build'
+  include '**/*.puml'
+}
+
+task convert(dependsOn: copy) {
+  doLast {
+    net.sourceforge.plantuml.Run.main('build/**/*.puml')
+  }
+}
+
+task setup {
+  doLast {
+    java.awt.GraphicsEnvironment.localGraphicsEnvironment.allFonts.each(this.&println)
+  }
+}
