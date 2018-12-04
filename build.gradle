@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath group: 'net.sourceforge.plantuml', name: 'plantuml', version: '1.2018.12'
+        classpath group: 'net.sourceforge.plantuml', name: 'plantuml', version: '1.2018.13'
     }
 }
 

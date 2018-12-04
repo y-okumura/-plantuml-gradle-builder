@@ -6,8 +6,13 @@ ENV LC_ALL=ja_JP.UTF-8
 ENV GRADLE_OPTS -Dorg.gradle.daemon=false -Djava.awt.headless=true -DdefaultFontName=IPAexGothic -Xmx1G
 
 USER root
-RUN echo "@testing http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
-RUN apk --update add --no-cache graphviz font-ipa@testing
+RUN apk --update add --no-cache graphviz curl fontconfig \
+  && curl -O https://noto-website.storage.googleapis.com/pkgs/NotoSansCJKjp-hinted.zip \
+  && mkdir -p /usr/share/fonts/NotoSansCJKjp \
+  && unzip NotoSansCJKjp-hinted.zip -d /usr/share/fonts/NotoSansCJKjp/ \
+  && chmod -R +r /usr/share/fonts/NotoSansCJKjp/ \
+  && rm NotoSansCJKjp-hinted.zip \
+  && fc-cache -fv
 
 USER gradle
 RUN fc-cache -fv
